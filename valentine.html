@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Pookie</title>
+    <style>
+        :root {
+            --bg-color: #fce4ec;
+            --heart-pink: #ff80ab;
+        }
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#f8bbd0 20%, transparent 20%), radial-gradient(#f8bbd0 20%, transparent 20%);
+            background-position: 0 0, 50px 50px;
+            background-size: 100px 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            border-radius: 30px;
+            text-align: center;
+            width: 350px;
+            border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .header-text {
+            color: #d81b60;
+            font-size: 24px;
+            margin: 15px 0;
+            min-height: 60px;
+        }
+        .main-gif {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+        #yesBtn { background: #4caf50; color: white; }
+        #noBtn { background: #ff5252; color: white; }
+        .click-me-btn {
+            background: #ff4081;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="card" id="card">
+    <img id="displayGif" src="https://media.tenor.com/974_W-K6_O4AAAAi/milk-and-mocha-bears.gif" class="main-gif">
+    <h2 id="textDisplay" class="header-text">Ready for 7 days of love?</h2>
+    
+    <div id="controls">
+        <div class="btn-container" id="choiceBtns">
+            <button id="yesBtn" onclick="startSequence()">YES</button>
+            <button id="noBtn" onclick="handleNo()">NO</button>
+        </div>
+        <div class="btn-container hidden" id="nextContainer">
+            <button class="click-me-btn" onclick="nextStep()">CLICK ME</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let noCount = 0;
+    let currentStep = 0;
+
+    const sequence = [
+        { img: "https://media.tenor.com/Psh_769_U3AAAAAi/milk-and-mocha.gif", text: "Phool for my fool! <br> HAPPY ROSE DAY 🌹" },
+        { img: "https://media.tenor.com/Z6S-jJ1Y4mUAAAAi/mocha-milk.gif", text: "Will you be mine? <br> HAPPY PROPOSE DAY 💍" },
+        { img: "https://media.tenor.com/y359e-eP2-AAAAAi/milk-and-mocha.gif", text: "I ate ur chocolate otw... <br> HAPPY CHOCOLATE DAY 🍫" },
+        { img: "https://media.tenor.com/vH_y3_iP8Q8AAAAi/milk-and-mocha.gif", text: "I promise to stay by ur side! <br> HAPPY PROMISE DAY 🤝" },
+        { img: "https://media.tenor.com/0uB0Bv0XFmAAAAAi/milk-and-mocha.gif", text: "Virtual hug for ya! <br> HAPPY HUG DAY 🫂" },
+        { img: "https://media.tenor.com/6_G9P0-v9X0AAAAi/milk-and-mocha.gif", text: "You wear my kisses better than me! <br> HAPPY KISS DAY 💋" },
+        { img: "https://media.tenor.com/R_p9yN-f170AAAAi/milk-and-mocha.gif", text: "HAPPY VALENTINE'S DAY! ❤️" }
+    ];
+
+    function handleNo() {
+        noCount++;
+        const noBtn = document.getElementById('noBtn');
+        
+        if (noCount < 3) {
+            // Button jumps away
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = "fixed";
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        } else {
+            // THE SLINGSHOT "WHY DID U CLICK NO" SCREEN
+            document.getElementById('displayGif').src = "https://media.tenor.com/Zp9uWwDk8p0AAAAi/milk-mocha.gif";
+            document.getElementById('textDisplay').innerHTML = "Why did u click no!? 😠";
+            document.getElementById('choiceBtns').innerHTML = '<button id="yesBtn" style="width:100%" onclick="resetFromNo()">TRY AGAIN</button>';
+        }
+    }
+
+    function resetFromNo() {
+        location.reload();
+    }
+
+    function startSequence() {
+        document.getElementById('choiceBtns').classList.add('hidden');
+        document.getElementById('nextContainer').classList.remove('hidden');
+        nextStep();
+    }
+
+    function nextStep() {
+        if (currentStep < sequence.length) {
+            const item = sequence[currentStep];
+            document.getElementById('displayGif').src = item.img;
+            document.getElementById('textDisplay').innerHTML = item.text;
+            currentStep++;
+        } else {
+            document.getElementById('nextContainer').innerHTML = "<p style='color:#d81b60'>I Love You Forever! ❤️</p>";
+        }
+    }
+</script>
+
+</body>
+</html>
